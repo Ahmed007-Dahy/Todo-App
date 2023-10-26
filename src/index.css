@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .inputField {
+        @apply w-3/4 lg:w-1/5 mr-4 py-3 px-3.5 focus:outline-none rounded-2xl bg-sky-600 text-white placeholder:text-white shadow-inner shadow-sky-950;
+    }
+
+    .btnFrom {
+        @apply bg-sky-600 text-white w-32 py-2.5 text-lg rounded-2xl shadow-inner shadow-sky-950;
+    }
+
+    .todoItem {
+        @apply flex items-center justify-between h-fit bg-todo-item text-white font-bold text-2xl p-2 rounded-xl shadow-inner;
+    }
+
+    .footer {
+        @apply bg-teal-600 text-xl text-white flex items-center justify-center w-full h-fit font-bold;
+    }
+
+    .headingList {
+        @apply flex items-center justify-center gap-x-4 text-white text-2xl py-5 px-9 rounded-xl;
+    }
+}

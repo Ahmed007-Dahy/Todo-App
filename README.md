@@ -13,6 +13,8 @@
   <li>React: A JavaScript library for building user interfaces.</li>
   <li>TypeScript: A statically typed superset of JavaScript that enhances code quality and maintainability.</li>
   <li>Context API: A built-in state management tool in React for managing application-level state and providing data to components.</li>
+  <li>Tailwind CSS: A utility-first CSS framework for building modern, responsive web interfaces.</li>
+  <li>Vite: A fast-build tool and development server for modern web projects.</li>
 </ol>
 <h2>Demo:</h2>
 <ol>

@@ -44,7 +44,6 @@ function TodoBox({ status }: TodoBoxProps): ReactElement {
     }
 
     function addTodoToList(id: number): void {
-        console.log('dropped', id, status);
         setTodoItems((prevTask: Todo[]) => {
             const newTodoTask: Todo[] = prevTask.map((task: Todo) => {
                 if (task.id === id) {
@@ -53,12 +52,11 @@ function TodoBox({ status }: TodoBoxProps): ReactElement {
                 return task;
             });
             localStorage.setItem('todoTasks', JSON.stringify(newTodoTask));
-            console.log(newTodoTask);
             return newTodoTask;
         });
     }
 
-    let headingStatus;
+    let headingStatus, boxBg;
 
     if (status === 'notStarted') {
         headingStatus = <span>⌛</span>;
@@ -67,13 +65,21 @@ function TodoBox({ status }: TodoBoxProps): ReactElement {
     } else if (status === 'Done') {
         headingStatus = <IoMdDoneAll />;
     }
-
+    if (status === 'notStarted') {
+        boxBg = 'bg-not-started-todo-num';
+    }
+    if (status === 'In Progress') {
+        boxBg = 'bg-in-progress-todo-num';
+    }
+    if (status === 'Done') {
+        boxBg = 'bg-done-todo-num';
+    }
     return (
         <div
             ref={ref}
             className={`${
                 dropProps.isOver && dropProps.canDrop
-                    ? 'bg-gray-500 p-4 rounded-xl transition duration-150'
+                    ? `${boxBg} p-4 rounded-xl transition duration-150`
                     : ''
             } text-center w-full overflow-y-auto py-5`}
         >

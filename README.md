@@ -8,7 +8,8 @@
   <li>Responsive Design: The app is optimized for various devices.</li>
 </ol>
 <h2>Tech Stack:</h2>
-<ol><p>This project is built using the following technologies and libraries:</p>
+<p>This project is built using the following technologies and libraries:</p>
+<ol>
   <li>React: A JavaScript library for building user interfaces.</li>
   <li>TypeScript: A statically typed superset of JavaScript that enhances code quality and maintainability.</li>
   <li>Context API: A built-in state management tool in React for managing application-level state and providing data to components.</li>

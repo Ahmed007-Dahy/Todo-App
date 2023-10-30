@@ -16,7 +16,7 @@
   <li>Context API: A built-in state management tool in React for managing application-level state and providing data to components.</li>
   <li>Tailwind CSS: A utility-first CSS framework for building modern, responsive web interfaces.</li>
   <li>Vite: A fast-build tool and development server for modern web projects.</li>
-  <li>**Local Storage**: The browser's local storage is used to persist tasks locally for easy retrieval and user data management.</li>
+  <li>Local Storage: The browser's local storage is used to persist tasks locally for easy retrieval and user data management.</li>
 </ol>
 <h2>Demo:</h2>
 <ol>

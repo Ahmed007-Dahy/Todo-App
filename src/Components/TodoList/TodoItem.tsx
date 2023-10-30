@@ -71,7 +71,9 @@ function TodoItem({
                 </span>
                 <span
                     className={`${
-                        status === 'notStarted' ? 'hidden' : 'block'
+                        status === 'notStarted'
+                            ? 'cursor-not-allowed opacity-30'
+                            : 'cursor-pointer'
                     } cursor-pointer`}
                     onClick={handleNotStartedItem}
                 >
@@ -79,7 +81,9 @@ function TodoItem({
                 </span>
                 <span
                     className={`${
-                        status === 'In Progress' ? 'hidden' : 'block'
+                        status === 'In Progress'
+                            ? 'cursor-not-allowed opacity-30'
+                            : 'cursor-pointer'
                     } cursor-pointer`}
                     onClick={handleProgressItem}
                 >
@@ -87,7 +91,9 @@ function TodoItem({
                 </span>
                 <span
                     className={`${
-                        status === 'Done' ? 'hidden' : 'block'
+                        status === 'Done'
+                            ? 'cursor-not-allowed opacity-30'
+                            : 'cursor-pointer'
                     } cursor-pointer`}
                     onClick={handleFinishItem}
                 >

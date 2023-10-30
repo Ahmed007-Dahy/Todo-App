@@ -1,10 +1,16 @@
 import React from 'react';
 
-import { Todo, useTodo } from '../../Context/TodoContext.tsx';
+import { Todo } from '../../Context/TodoContext.tsx';
+import useTodo from '../../Context/useTodo.tsx';
 
 function InputField(): React.JSX.Element {
-    const { setTodo, todo, todoSubTitle, setTodoSubTitle, handleAddTodo } =
-        useTodo();
+    const {
+        todo,
+        setTodo,
+        handleAddTodo: onAddTodo,
+        todoSubTitle,
+        setTodoSubTitle,
+    } = useTodo();
 
     function handleInput(e: React.ChangeEvent<HTMLInputElement>): void {
         setTodo(e.target.value);
@@ -26,10 +32,9 @@ function InputField(): React.JSX.Element {
             isDone: false,
             status: 'notStarted',
         };
-        handleAddTodo(newTodoItem);
+        onAddTodo(newTodoItem);
         setTodo('');
         setTodoSubTitle('');
-        console.log(newTodoItem);
     }
 
     return (

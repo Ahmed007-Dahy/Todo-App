@@ -1,10 +1,4 @@
-import React, {
-    createContext,
-    ReactElement,
-    useContext,
-    useEffect,
-    useState,
-} from 'react';
+import React, { createContext, ReactElement, useEffect, useState } from 'react';
 
 export interface Todo {
     id: number;
@@ -19,24 +13,51 @@ export interface TodoAppProviderProps {
 }
 
 export interface TodoContextType {
+    todo: string;
+    todoSubTitle: string;
     todoItems: Todo[];
     notStartedTask: Todo[];
     progressTask: Todo[];
     doneTask: Todo[];
-    todo: string;
-    todoSubTitle: string;
     statuses: string[];
-    handleAddTodo: (todoItem: Todo) => void;
-    handleRemoveTodo: (id: number) => void;
-    handleFinishTodo: (id: number) => void;
-    handleProgressTodo: (id: number) => void;
-    handleNotStartedTodo: (id: number) => void;
     setTodo: React.Dispatch<React.SetStateAction<string>>;
-    setTodoItems: React.Dispatch<React.SetStateAction<Todo[]>>;
     setTodoSubTitle: React.Dispatch<React.SetStateAction<string>>;
+    setTodoItems: React.Dispatch<React.SetStateAction<Todo[]>>;
+    setNotStartedTask: React.Dispatch<React.SetStateAction<Todo[]>>;
+    setProgressTask: React.Dispatch<React.SetStateAction<Todo[]>>;
+    setDoneTask: React.Dispatch<React.SetStateAction<Todo[]>>;
+
+    handleAddTodo(todoItem: Todo): void;
+
+    handleRemoveTodo(id: number): void;
+
+    handleFinishTodo(id: number): void;
+
+    handleProgressTodo(id: number): void;
+
+    handleNotStartedTodo(id: number): void;
 }
 
-export const TodoContext = createContext<TodoContextType | string>('');
+export const TodoContext = createContext<TodoContextType>({
+    todo: '',
+    todoSubTitle: '',
+    todoItems: [],
+    notStartedTask: [],
+    progressTask: [],
+    doneTask: [],
+    statuses: ['notStarted', 'In Progress', 'Done'],
+    setDoneTask: (): void => {},
+    setTodo: (): void => {},
+    setNotStartedTask: (): void => {},
+    setProgressTask: (): void => {},
+    setTodoSubTitle: (): void => {},
+    setTodoItems: (): void => {},
+    handleAddTodo: (): void => {},
+    handleRemoveTodo: (): void => {},
+    handleFinishTodo: (): void => {},
+    handleProgressTodo: (): void => {},
+    handleNotStartedTodo: (): void => {},
+});
 
 function TodoAppProvider({ children }: TodoAppProviderProps): ReactElement {
     const [todo, setTodo] = useState<string>('');
@@ -44,7 +65,7 @@ function TodoAppProvider({ children }: TodoAppProviderProps): ReactElement {
     const [todoItems, setTodoItems] = useState(function () {
         const storedTodoItems: string | null =
             localStorage.getItem('todoTasks');
-        return storedTodoItems ? JSON.parse(storedTodoItems) : null;
+        return storedTodoItems ? JSON.parse(storedTodoItems) : [];
     });
     const [notStartedTask, setNotStartedTask] = useState<Todo[]>([]);
     const [progressTask, setProgressTask] = useState<Todo[]>([]);
@@ -55,8 +76,8 @@ function TodoAppProvider({ children }: TodoAppProviderProps): ReactElement {
         if (
             !todoItems.find(
                 (item: Todo): boolean =>
-                    item.todoTitle.toLowerCase() ===
-                    todoItem.todoTitle.toLowerCase(),
+                    item.todoTitle.toLowerCase().trim() ===
+                    todoItem.todoTitle.toLowerCase().trim(),
             )
         ) {
             const todoList: Todo[] = [...todoItems, todoItem];
@@ -113,28 +134,28 @@ function TodoAppProvider({ children }: TodoAppProviderProps): ReactElement {
         },
         [todoItems],
     );
-
     useEffect((): void => {
         localStorage.setItem('todoTasks', JSON.stringify(todoItems));
     }, [todoItems]);
-
-    console.log('todo:', todo, 'todoSubTitle:', todoSubTitle);
     const TodoAppValues: TodoContextType = {
-        handleAddTodo,
-        handleRemoveTodo,
-        handleFinishTodo,
-        handleProgressTodo,
-        handleNotStartedTodo,
-        setTodo,
-        setTodoItems,
-        setTodoSubTitle,
-        todoItems,
         todo,
         todoSubTitle,
+        todoItems,
         notStartedTask,
         progressTask,
         doneTask,
+        setNotStartedTask,
+        setProgressTask,
+        setDoneTask,
         statuses,
+        setTodoSubTitle,
+        setTodo,
+        setTodoItems,
+        handleAddTodo,
+        handleRemoveTodo,
+        handleFinishTodo,
+        handleNotStartedTodo,
+        handleProgressTodo,
     };
 
     return (
@@ -144,12 +165,4 @@ function TodoAppProvider({ children }: TodoAppProviderProps): ReactElement {
     );
 }
 
-function useTodo(): TodoContextType | string {
-    const context = useContext(TodoContext);
-    if (context === undefined)
-        throw new Error('you use Quiz context out of its context');
-    return context;
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export { TodoAppProvider, useTodo };
+export { TodoAppProvider };

@@ -1,25 +1,9 @@
-// import { ReactElement } from 'react';
-import TodoBox from './TodoBox.tsx';
-import { useTodo } from '../../Context/TodoContext.tsx';
 import React from 'react';
-
-// interface TodoListProps {
-//     todoItems: Todo[];
-//     setTodoItems: React.Dispatch<React.SetStateAction<Todo[]>>;
-//
-//     onRemoveTodo(id: number): void;
-//
-//     onFinishTodo(id: number): void;
-//
-//     onProgressTodo(id: number): void;
-//
-//     onNotStartedTodo(id: number): void;
-// }
+import TodoBox from './TodoBox.tsx';
+import useTodo from '../../Context/useTodo.tsx';
 
 function TodoList(): React.JSX.Element {
     const { statuses } = useTodo();
-    console.log(useTodo());
-
     return (
         <div
             className={

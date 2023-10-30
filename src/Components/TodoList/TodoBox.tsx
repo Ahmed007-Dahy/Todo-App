@@ -1,34 +1,30 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import TodoItem from './TodoItem.tsx';
-import { useDrop } from 'react-dnd';
-import { useTodo, Todo } from '../../Context/TodoContext.tsx';
+// import { useDrop } from 'react-dnd';
+import { Todo } from '../../Context/TodoContext.tsx';
+import useTodo from '../../Context/useTodo.tsx';
+import { useMultiDrop } from 'react-dnd-multi-backend';
+import { TbProgress } from 'react-icons/tb';
+import { IoMdDoneAll } from 'react-icons/io';
 
 interface TodoBoxProps {
     status: string;
 }
 
 function TodoBox({ status }: TodoBoxProps): ReactElement {
-    const {
-        statuses,
-        todoItems,
-        setTodoItems,
-        notStartedTask,
-        progressTask,
-        doneTask,
-        handleRemoveTodo: onRemoveTodo,
-        handleFinishTodo: onFinishTodo,
-        handleNotStartedTodo: onNotStartedTodo,
-        handleProgressTodo: onProgressTodo,
-    } = useTodo();
-    const [{ isOver }, drop] = useDrop(() => ({
+    const { setTodoItems, notStartedTask, progressTask, doneTask } = useTodo();
+
+    const [[dropProps, ref]] = useMultiDrop({
         accept: 'todo',
         drop: (item: Todo): void => addTodoToList(item.id),
-        collect: (monitor) => ({
-            isOver: !!monitor.isOver(),
-        }),
-    }));
-
+        collect: (monitor) => {
+            return {
+                isOver: monitor.isOver(),
+                canDrop: monitor.canDrop(),
+            };
+        },
+    });
     let heading: string = 'Not Started';
     let backGround: string = 'bg-not-started-todo';
     let todoBg: string = 'bg-not-started-todo-num';
@@ -62,17 +58,27 @@ function TodoBox({ status }: TodoBoxProps): ReactElement {
         });
     }
 
+    let headingStatus;
+
+    if (status === 'notStarted') {
+        headingStatus = <span>⌛</span>;
+    } else if (status === 'In Progress') {
+        headingStatus = <TbProgress />;
+    } else if (status === 'Done') {
+        headingStatus = <IoMdDoneAll />;
+    }
+
     return (
         <div
-            ref={drop}
+            ref={ref}
             className={`${
-                isOver
+                dropProps.isOver && dropProps.canDrop
                     ? 'bg-gray-500 p-4 rounded-xl transition duration-150'
                     : ''
             } text-center w-full overflow-y-auto py-5`}
         >
             <span className={`headingList ${backGround}`}>
-                {heading}
+                {heading} {headingStatus}
                 <span
                     className={`${todoBg} text-white flex items-center justify-center w-1/12 h-1/6 rounded-full`}
                 >
@@ -81,7 +87,13 @@ function TodoBox({ status }: TodoBoxProps): ReactElement {
             </span>
             <ul className={'flex flex-col gap-5 mt-6 px-2'}>
                 {todoToMap.map((item: Todo) => (
-                    <TodoItem key={item.id} id={item.id} />
+                    <TodoItem
+                        key={item.id}
+                        id={item.id}
+                        todo={item.todoTitle}
+                        todoSubTitle={item.todoSubTitle}
+                        status={item.status}
+                    />
                 ))}
             </ul>
         </div>

@@ -5,6 +5,7 @@
   <li>Add tasks: Easily input tasks using a simple form, and they are added to the "Not Started" category by default.</li>
   <li>Task Management: Seamlessly move tasks between "Not Started," "In Progress," and "Done" columns using buttons or drag-and-drop.</li>
   <li>Remove tasks: Effortlessly delete tasks when they are no longer needed..</li>
+  <li>Task Editing: Update task title or task descriptions for more usability.</li>
   <li>Data Persistence: Utilizes the browser's local storage to persist tasks, ensuring that your tasks are saved even after you close the app.</li>
   <li>Responsive Design: The app is optimized for various devices.</li>
 </ol>

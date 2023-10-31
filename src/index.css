@@ -20,6 +20,6 @@
     }
 
     .headingList {
-        @apply flex items-center justify-center gap-x-4 text-white text-2xl py-5 px-9 rounded-xl;
+        @apply flex items-center justify-center gap-x-4 text-white text-xl lg:text-2xl py-5 px-9 rounded-xl;
     }
 }

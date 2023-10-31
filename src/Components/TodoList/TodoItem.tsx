@@ -77,6 +77,7 @@ function TodoItem({
 
     function handleEditForm(e: React.FormEvent, id: number): void {
         e.preventDefault();
+        if (editTodo.length < 3) return;
         setTodoItems(
             todoItems.map((todoItem: Todo) =>
                 todoItem.id === id
@@ -89,6 +90,7 @@ function TodoItem({
 
     function handleEditSubTitleForm(e: React.FormEvent, id: number): void {
         e.preventDefault();
+        if (editSubTitle.length < 3) return;
         setTodoItems(
             todoItems.map((todoItem: Todo) =>
                 todoItem.id === id
@@ -128,7 +130,7 @@ function TodoItem({
                         className={`w-11/12`}
                     >
                         <input
-                            className={`bg-transparent border-2 w-11/12`}
+                            className={`bg-transparent border-2 w-11/12 text-xl placeholder:text-xl`}
                             type="text"
                             placeholder={'Enter your task...'}
                             value={editTodo}
@@ -137,10 +139,10 @@ function TodoItem({
                         />
                     </form>
                 ) : (
-                    todo
+                    <span className={`text-lg md:text-xl`}>{todo}</span>
                 )}
 
-                <ul className={`${edit ? 'w-11/12' : 'w-full'} text-lg`}>
+                <ul className={`w-full`}>
                     <li className={'pl-1 font-normal w-auto'}>
                         {edit ? (
                             <form
@@ -148,7 +150,7 @@ function TodoItem({
                                 className={`w-11/12`}
                             >
                                 <input
-                                    className={`bg-transparent border-2 w-11/12`}
+                                    className={`bg-transparent border-2 w-11/12 text-xl placeholder:text-xl`}
                                     type="text"
                                     placeholder={
                                         'Enter your description of task...'
@@ -158,12 +160,18 @@ function TodoItem({
                                 />
                             </form>
                         ) : (
-                            <span className={`pl-2`}>-{todoSubTitle}</span>
+                            <span
+                                className={`${
+                                    edit ? 'pl-0' : 'pl-2'
+                                } text-xs md:text-lg`}
+                            >
+                                -{todoSubTitle}
+                            </span>
                         )}
                     </li>
                 </ul>
             </div>
-            <div className={'flex items-center gap-7'}>
+            <div className={'flex items-center gap-2 lg:gap-7'}>
                 <span className={'cursor-pointer'} onClick={handleRemoveItem}>
                     <AiFillDelete />
                 </span>
